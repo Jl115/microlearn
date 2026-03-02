@@ -1,18 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-
 class LessonService {
-  final FirebaseFirestore _db = FirebaseFirestore.instance;
-
-  Future<list<Map>> fetchTodayLessons() async {
-    // Placeholder: fetch from a collection "lessons" limited to today
-    final snapshot = await _db.collection('lessons').limit(5).get();
-    return snapshot.docs.map((doc) => doc.data()).toList();
+  // Mock data for now – you can replace with Firestore later
+  Future<List<Map<String, dynamic>>> getMockLessons() async {
+    return [
+      {'id': '1', 'title': 'Intro to Dart', 'content': 'Learn basics of Dart language.'},
+      {'id': '2', 'title': 'Flutter Widgets', 'content': 'Explore core Flutter widgets.'},
+      {'id': '3', 'title': 'State Management', 'content': 'Understanding Bloc & GetIt.'},
+    ];
   }
 
-  Future<void> markCompleted(String lessonId) async {
-    await _db.collection('lessons').doc(lessonId).update({
-      'completed': true,
-      'completedAt': FieldValue.serverTimestamp(),
-    });
+  Future<void> markAsCompleted(String lessonId) async {
+    // No-op for mock – in a real app you would update Firestore or a local DB.
   }
 }

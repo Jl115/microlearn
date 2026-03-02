@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:microlearn/bloc/lesson/lesson_bloc.dart';
+import 'package:microlearn/services/quiz_service.dart';
 
 class QuizScreen extends StatelessWidget {
   final List<Map<String, dynamic>> quiz;
@@ -12,23 +15,22 @@ class QuizScreen extends StatelessWidget {
         itemCount: quiz.length,
         itemBuilder: (context, index) {
           final q = quiz[index];
-          return Card(
-            margin: const EdgeInsets.all(8.0),
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(q['question'], style: const TextStyle(fontWeight: FontWeight.bold)),
-                  const SizedBox(height: 8),
-                  ...List<Widget>.fromList(q['options'].map<Widget>((opt) => RadioListTile(
-                        title: Text(opt),
-                        value: opt,
-                        groupValue: null,
-                        onChanged: (_) {},
-                      ))),
-                ],
-              ),
+          return ListTile(
+            title: Text(q['question'] as String),
+            subtitle: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: (q['options'] as List<String>)
+                  .map((opt) => Row(
+                        children: [
+                          Radio<String>(
+                            value: opt,
+                            groupValue: null,
+                            onChanged: (_) {},
+                          ),
+                          Text(opt),
+                        ],
+                      ))
+                  .toList(),
             ),
           );
         },
