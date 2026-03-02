@@ -1,3 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
+
 class LessonService {
   // Mock data for now – you can replace with Firestore later
   Future<List<Map<String, dynamic>>> getMockLessons() async {
@@ -8,7 +11,16 @@ class LessonService {
     ];
   }
 
+  // Real Firestore fetch (optional – requires collection 'lessons')
+  Future<List<Map<String, dynamic>>> getFirestoreLessons() async {
+    final snapshot = await FirebaseFirestore.instance.collection('lessons').get();
+    return snapshot.docs.map((doc) => {
+          'id': doc.id,
+          ...doc.data(),
+        }).toList();
+  }
+
   Future<void> markAsCompleted(String lessonId) async {
-    // No-op for mock – in a real app you would update Firestore or a local DB.
+    // No-op for mock – in real app update Firestore or a local DB.
   }
 }
