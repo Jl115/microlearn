@@ -22,11 +22,8 @@ class QuizScreen extends StatelessWidget {
               children: (q['options'] as List<String>)
                   .map((opt) => Row(
                         children: [
-                          Radio<String>(
-                            value: opt,
-                            groupValue: null,
-                            onChanged: (_) {},
-                          ),
+                          const Icon(Icons.circle_outlined, size: 12),
+                          const SizedBox(width: 8),
                           Text(opt),
                         ],
                       ))
